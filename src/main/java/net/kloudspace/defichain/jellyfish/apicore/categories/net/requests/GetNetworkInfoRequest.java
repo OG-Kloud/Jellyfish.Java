@@ -1,0 +1,28 @@
+package net.kloudspace.defichain.jellyfish.apicore.categories.net.requests;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import net.kloudspace.defichain.jellyfish.RpcClient.ApiError;
+import net.kloudspace.defichain.jellyfish.apicore.IRpcRequest;
+import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
+import net.kloudspace.defichain.jellyfish.apicore.categories.net.model.NetworkInfo;
+
+public class GetNetworkInfoRequest implements IRpcRequest<NetworkInfo> {
+
+	@Override
+	public String getName() {
+		return "getnetworkinfo";
+	}
+
+	@Override
+	public String getParameters() {
+		return "[]";
+	}
+
+	@Override
+	public RpcResponse<NetworkInfo> parse(JsonObject obj) throws ApiError {
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result"), NetworkInfo.class), 0);
+	}
+
+}
