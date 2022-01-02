@@ -1,1 +1,0 @@
-A Java wrapper for the Defichain RPC
