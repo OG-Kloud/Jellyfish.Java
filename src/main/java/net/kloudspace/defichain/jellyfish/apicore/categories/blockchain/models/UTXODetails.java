@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.kloudspace.defichain.jellyfish.model.ScriptPubKey;
+
 public class UTXODetails {
 
 	private String bestblock;

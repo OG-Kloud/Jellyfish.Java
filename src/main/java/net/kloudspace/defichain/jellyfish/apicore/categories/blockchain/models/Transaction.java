@@ -1,5 +1,8 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.blockchain.models;
 
+import net.kloudspace.defichain.jellyfish.model.Vin;
+import net.kloudspace.defichain.jellyfish.model.Vout;
+
 public class Transaction {
 
 	private String txid, hash, hex;

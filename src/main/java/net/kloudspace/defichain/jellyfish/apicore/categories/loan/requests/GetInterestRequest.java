@@ -1,5 +1,6 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.loan.requests;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.kloudspace.defichain.jellyfish.RpcClient.ApiError;
@@ -7,7 +8,7 @@ import net.kloudspace.defichain.jellyfish.apicore.IRpcRequest;
 import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.Interest;
 
-public class GetInterestRequest<T> implements IRpcRequest<T> {
+public class GetInterestRequest implements IRpcRequest<Interest> {
 
 	private final String schemeid;
 	
@@ -25,12 +26,9 @@ public class GetInterestRequest<T> implements IRpcRequest<T> {
 		return "["+this.schemeid+"]";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) throws ApiError {
-		JsonObject result = obj.get("result").getAsJsonObject();
-		Interest data = new Interest(result.get("token").getAsString(), result.get("totalInterest").getAsBigDecimal(), result.get("interestPerBlock").getAsBigDecimal());
-		return new RpcResponse<>((T)data, 0);
+	public RpcResponse<Interest> parse(JsonObject obj) throws ApiError {
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result").getAsJsonObject(), Interest.class), 0);
 	}
 
 }

@@ -37,8 +37,8 @@ public class AccountController {
 	}
 
 	@SuppressWarnings("unchecked")
-	public RpcResponse<List<AccountResult<AccountOwner, AccountAmount>>> listAccounts() throws IOException, ApiError {
-		return (RpcResponse<List<AccountResult<AccountOwner, AccountAmount>>>) client.call(new ListAccountsRequest());
+	public RpcResponse<AccountResult<AccountOwner, AccountAmount>[]> listAccounts() throws IOException, ApiError {
+		return (RpcResponse<AccountResult<AccountOwner, AccountAmount>[]>) client.call(new ListAccountsRequest());
 	}
 
 	@SuppressWarnings("unchecked")

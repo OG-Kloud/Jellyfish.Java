@@ -1,5 +1,6 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.loan.requests;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.kloudspace.defichain.jellyfish.RpcClient.ApiError;
@@ -22,13 +23,12 @@ public class PlaceAuctionBidRequest implements IRpcRequest<String> {
 
 	@Override
 	public String getParameters() {
-		return "["+options.getAsParameter()+"]";
+		return options != null ? "["+options.getAsParameter()+"]" : "[]";
 	}
 
 	@Override
 	public RpcResponse<String> parse(JsonObject obj) throws ApiError {
-		// TODO Auto-generated method stub
-		return null;
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result"), String.class), 0);
 	}
 
 }

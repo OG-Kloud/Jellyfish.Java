@@ -1,6 +1,5 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.poolpair.requests;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.kloudspace.defichain.jellyfish.RpcClient.ApiError;
@@ -9,7 +8,6 @@ import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.poolpair.options.PoolSwapOptions;
 
 public class TestPoolSwapRequest implements IRpcRequest<String> {
-	
 
 	private final PoolSwapOptions options;
 
@@ -24,7 +22,7 @@ public class TestPoolSwapRequest implements IRpcRequest<String> {
 
 	@Override
 	public String getParameters() {
-		return "[" + this.options.getAsParameter() + "]";
+		return options != null ? "[" + this.options.getAsParameter() + "]" : "[]";
 	}
 
 	@Override

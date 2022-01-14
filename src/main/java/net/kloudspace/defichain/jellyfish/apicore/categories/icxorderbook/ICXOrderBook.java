@@ -1,7 +1,14 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.icxorderbook;
 
 import net.kloudspace.defichain.jellyfish.RpcClient;
-
+/**
+ * 
+ * @author Kloudspace
+ *
+ *WIP
+ *ICXOrderBook API methods not implemented fully in Jellyfish RPC
+ *
+ */
 public class ICXOrderBook {
 	
 private RpcClient client;

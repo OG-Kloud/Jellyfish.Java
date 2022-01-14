@@ -22,7 +22,7 @@ public class ListPoolShareRequest implements IRpcRequest<PoolShareResult> {
 
 	@Override
 	public RpcResponse<PoolShareResult> parse(JsonObject obj) throws ApiError {
-		return new RpcResponse<PoolShareResult>(new Gson().fromJson(obj, PoolShareResult.class), 0);
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result"), PoolShareResult.class), 0);
 	}
 
 }

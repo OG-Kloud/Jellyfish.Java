@@ -3,6 +3,8 @@ package net.kloudspace.defichain.jellyfish.apicore.categories.blockchain.models;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 public class BlockchainInfo {
 
 	private String chain;
@@ -98,7 +100,7 @@ public class BlockchainInfo {
 
 
 	public void print() {
-		System.out.println("\nBlockchainInfo: \nNetwork: " + this.chain + "\nNumber of Blocks: " + this.blocks + "\n");
+		System.out.println(new Gson().toJson(this));
 	}
 
 }

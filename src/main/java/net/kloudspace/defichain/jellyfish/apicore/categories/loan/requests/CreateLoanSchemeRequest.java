@@ -8,7 +8,7 @@ import net.kloudspace.defichain.jellyfish.apicore.RpcError;
 import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.options.CreateLoanSchemeOptions;
 
-public class CreateLoanSchemeRequest<T> implements IRpcRequest<T>{
+public class CreateLoanSchemeRequest implements IRpcRequest<String>{
 	
 	private final CreateLoanSchemeOptions options;
 	
@@ -44,7 +44,7 @@ public class CreateLoanSchemeRequest<T> implements IRpcRequest<T>{
 		}
 	 */
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) throws ApiError {
+	public RpcResponse<String> parse(JsonObject obj) throws ApiError {
 		return new RpcResponse<>(new RpcError(obj.get("error").getAsJsonObject().get("code").getAsInt(), obj.get("error").getAsJsonObject().get("message").getAsString()), 0);
 	}
 	

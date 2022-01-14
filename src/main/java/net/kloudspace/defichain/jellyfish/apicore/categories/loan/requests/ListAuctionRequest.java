@@ -13,7 +13,7 @@ import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.VaultLiquidation;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.options.AuctionPagination;
 
-public class ListAuctionRequest implements IRpcRequest<List<VaultLiquidation>> {
+public class ListAuctionRequest implements IRpcRequest<VaultLiquidation[]> {
 	
 	private AuctionPagination pagination;
 	
@@ -32,14 +32,14 @@ public class ListAuctionRequest implements IRpcRequest<List<VaultLiquidation>> {
 	}
 
 	@Override
-	public RpcResponse<List<VaultLiquidation>> parse(JsonObject obj) throws ApiError {
+	public RpcResponse<VaultLiquidation[]> parse(JsonObject obj) throws ApiError {
 		JsonArray array = obj.get("result").getAsJsonArray();
 		List<VaultLiquidation> data = new ArrayList<>();
 		array.forEach(ele ->{
 			data.add(new Gson().fromJson(ele.getAsJsonObject(), VaultLiquidation.class));
 		});
 		
-		return new RpcResponse<>(data, obj.get("id").getAsInt());
+		return new RpcResponse<>(data.toArray(new VaultLiquidation[data.size()]), obj.get("id").getAsInt());
 	}
 
 }

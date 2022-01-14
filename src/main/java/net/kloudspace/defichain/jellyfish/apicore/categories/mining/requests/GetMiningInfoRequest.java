@@ -1,12 +1,13 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.mining.requests;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.kloudspace.defichain.jellyfish.apicore.IRpcRequest;
 import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.mining.model.MiningInfo;
 
-public class GetMiningInfoRequest<T> implements IRpcRequest<T> {
+public class GetMiningInfoRequest implements IRpcRequest<MiningInfo> {
 
 	@Override
 	public String getName() {
@@ -18,17 +19,9 @@ public class GetMiningInfoRequest<T> implements IRpcRequest<T> {
 		return "[]";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) {
-		MiningInfo data = new MiningInfo(obj.get("results").getAsJsonObject().get("blocks").getAsNumber(),
-				obj.get("results").getAsJsonObject().get("difficulty").getAsBigDecimal(),
-				obj.get("results").getAsJsonObject().get("networkhashps").getAsBigDecimal(),
-				obj.get("results").getAsJsonObject().get("pooledtx").getAsNumber());
-		data.setChain(obj.get("results").getAsJsonObject().get("chain").getAsString());
-		data.setOperator(obj.get("results").getAsJsonObject().get("isoperator").getAsBoolean());
-		
-		return new RpcResponse<>((T)data, 0);
+	public RpcResponse<MiningInfo> parse(JsonObject obj) {
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result"), MiningInfo.class), 0);
 	}
 
 }

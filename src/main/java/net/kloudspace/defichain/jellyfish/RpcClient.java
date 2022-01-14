@@ -9,6 +9,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+import org.bitcoinj.core.Base58;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -19,41 +21,43 @@ import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 import net.kloudspace.defichain.jellyfish.apicore.categories.account.AccountController;
 import net.kloudspace.defichain.jellyfish.apicore.categories.blockchain.Blockchain;
 import net.kloudspace.defichain.jellyfish.apicore.categories.governance.GovernanceController;
+import net.kloudspace.defichain.jellyfish.apicore.categories.icxorderbook.ICXOrderBook;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.LoanController;
+import net.kloudspace.defichain.jellyfish.apicore.categories.masternode.MasternodeController;
 import net.kloudspace.defichain.jellyfish.apicore.categories.mining.MiningController;
 import net.kloudspace.defichain.jellyfish.apicore.categories.net.NetworkController;
+import net.kloudspace.defichain.jellyfish.apicore.categories.oracle.OracleController;
 import net.kloudspace.defichain.jellyfish.apicore.categories.poolpair.PoolPairController;
+import net.kloudspace.defichain.jellyfish.apicore.categories.rawtx.RawTxController;
 import net.kloudspace.defichain.jellyfish.apicore.categories.server.Server;
 import net.kloudspace.defichain.jellyfish.apicore.categories.token.TokenController;
+import net.kloudspace.defichain.jellyfish.apicore.categories.wallet.WalletController;
+import net.kloudspace.defichain.jellyfish.model.ScriptPubKey;
 
 public class RpcClient extends ApiClient {
 
-	@SuppressWarnings("unused")
 	private final String daemonUrl;
-	@SuppressWarnings("unused")
 	private final String rpcUsername;
-	@SuppressWarnings("unused")
 	private final String rpcPassword;
 	private final Number rpcRequestTimeout;
 
 	public static final String DUMMY_ADDRESS = "dZpek97RbpjTrNNEianYfgkws6xdahpnu9";
 
 	private final AccountController accountController = new AccountController(this);
-	private final Blockchain blockchain = new Blockchain(this);
+	private final Blockchain blockchainController = new Blockchain(this);
 	private final LoanController loanController = new LoanController(this);
-	private final MiningController mining = new MiningController(this);
+	private final MiningController miningController = new MiningController(this);
 	private final PoolPairController poolpairController = new PoolPairController(this);
 	private final TokenController tokenController = new TokenController(this);
-	private final NetworkController network = new NetworkController(this);
-	private final Server server = new Server(this);
-	private final GovernanceController governance = new GovernanceController(this);
-//	private final ICXOrderBook ixcorderbook;
-//	private final MasternodeController masternode;
-//	private final OracleController oracle;
-//	private final RawTxController rawtx;
+	private final NetworkController networkController = new NetworkController(this);
+	private final Server serverController = new Server(this);
+	private final GovernanceController governanceController = new GovernanceController(this);
+	private final ICXOrderBook ixcorderbookController = new ICXOrderBook(this);
+	private final MasternodeController masternodeController = new MasternodeController(this);
+	private final OracleController oracleController = new OracleController(this);
+	private final RawTxController rawtx = new RawTxController(this);
 //	private final SPVController spv;
-//	private final WalletController wallet;
-
+	private final WalletController wallet = new WalletController(this);
 	public static boolean isLoading = true;
 
 	public RpcClient(String url, String username, String password, Number timeout) {
@@ -64,29 +68,51 @@ public class RpcClient extends ApiClient {
 		System.out.println("Client Constructed");
 
 	}
+	
+	
 
 	public AccountController getAccountController() {
 		return this.accountController;
 	}
 
 	public Blockchain getBlockchain() {
-		return this.blockchain;
+		return this.blockchainController;
 	}
-	
+	/**
+	 * Not yet implemented in RPC
+	 * 
+	 * @return The GovernanceApi Controller
+	 */
 	public GovernanceController getGovernanceController() {
-		return this.governance;
+		return this.governanceController;
+	}
+	/**
+	 * Not yet implemented in RPC
+	 * 
+	 * @return The GovernanceApi Controller
+	 */
+	public ICXOrderBook getICXOrderBook() {
+		return this.ixcorderbookController;
 	}
 	
 	public LoanController getLoanController() {
 		return this.loanController;
 	}
+	
+	public MasternodeController getMasternodeController() {
+		return this.masternodeController;
+	}
 
 	public MiningController getMiningController() {
-		return this.mining;
+		return this.miningController;
 	}
 	
 	public NetworkController getNetworkController() {
-		return this.network;
+		return this.networkController;
+	}
+	
+	public OracleController getOracleController() {
+		return this.oracleController;
 	}
 
 	public PoolPairController getPoolController() {
@@ -94,11 +120,15 @@ public class RpcClient extends ApiClient {
 	}
 	
 	public Server getServer() {
-		return this.server;
+		return this.serverController;
 	}
 
 	public TokenController getTokenController() {
 		return this.tokenController;
+	}
+	
+	public WalletController getWalletController() {
+		return this.wallet;
 	}
 
 	public RpcResponse<?> call(final IRpcRequest<?> irr) throws IOException, ApiError {

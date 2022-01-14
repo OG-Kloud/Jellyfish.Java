@@ -13,7 +13,7 @@ import net.kloudspace.defichain.jellyfish.apicore.categories.account.model.Accou
 import net.kloudspace.defichain.jellyfish.apicore.categories.account.model.AccountOwner;
 import net.kloudspace.defichain.jellyfish.apicore.categories.account.model.AccountResult;
 
-public class ListAccountsRequest implements IRpcRequest<List<AccountResult<AccountOwner, AccountAmount>>> {
+public class ListAccountsRequest implements IRpcRequest<AccountResult<AccountOwner, AccountAmount>[]> {
 
 	@Override
 	public String getName() {
@@ -27,13 +27,13 @@ public class ListAccountsRequest implements IRpcRequest<List<AccountResult<Accou
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<List<AccountResult<AccountOwner, AccountAmount>>> parse(JsonObject obj) {
+	public RpcResponse<AccountResult<AccountOwner, AccountAmount>[]> parse(JsonObject obj) {
 		JsonArray array = obj.get("result").getAsJsonArray();
 		List<AccountResult<AccountOwner, AccountAmount>> data = new ArrayList<>();
 		array.forEach(ele->{
 			data.add(new Gson().fromJson(ele.getAsJsonObject(), AccountResult.class));
 		});
-		return new RpcResponse<>(data, 0);
+		return new RpcResponse<>(data.toArray(new AccountResult[data.size()]), 0);
 		
 	}
 

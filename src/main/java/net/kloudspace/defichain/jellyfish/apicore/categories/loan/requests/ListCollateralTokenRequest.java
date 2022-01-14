@@ -20,6 +20,10 @@ public class ListCollateralTokenRequest implements IRpcRequest<CollateralTokenDe
 		this.options = null;
 	}
 	
+	public ListCollateralTokenRequest(ListCollateralTokenOptions opts) {
+		this.options = opts;
+	}
+	
 
 	@Override
 	public String getName() {

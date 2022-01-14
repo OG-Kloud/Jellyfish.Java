@@ -24,14 +24,12 @@ public class MiningController {
 	
 	@SuppressWarnings("unchecked")//????????
 	public RpcResponse<BigDecimal> getNetworkHashPerSecond(Number nBlocks, Number height) throws IOException, ApiError {
-		RpcResponse<BigDecimal> result = (RpcResponse<BigDecimal>) client.call(new GetNetworkHashRequest<>(nBlocks, height));
-		System.out.println("\nNetworkHashPerSecond: "+ result.get() + "\n");
-		return result;
+		return (RpcResponse<BigDecimal>) client.call(new GetNetworkHashRequest(nBlocks, height));
 	}
 	
 	@SuppressWarnings("unchecked")//???????????
 	public RpcResponse<MiningInfo> getMiningInfo() throws IOException, ApiError {
-		return (RpcResponse<MiningInfo>) client.call(new GetMiningInfoRequest<>());
+		return (RpcResponse<MiningInfo>) client.call(new GetMiningInfoRequest());
 	}
 	
 	/**

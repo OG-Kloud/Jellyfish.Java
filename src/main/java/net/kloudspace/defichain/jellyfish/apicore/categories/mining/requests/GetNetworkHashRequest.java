@@ -2,12 +2,13 @@ package net.kloudspace.defichain.jellyfish.apicore.categories.mining.requests;
 
 import java.math.BigDecimal;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.kloudspace.defichain.jellyfish.apicore.IRpcRequest;
 import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
 
-public class GetNetworkHashRequest<T> implements IRpcRequest<T> {
+public class GetNetworkHashRequest implements IRpcRequest<BigDecimal> {
 	
 	private Number nBlocks;
 	private Number height;
@@ -31,13 +32,9 @@ public class GetNetworkHashRequest<T> implements IRpcRequest<T> {
 		return "["+nBlocks+","+height+"]";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) {
-		System.out.println(obj.toString());
-		BigDecimal value = obj.get("result").getAsBigDecimal();
-		RpcResponse<T> response = new RpcResponse<>((T)value, 1);
-		return response;
+	public RpcResponse<BigDecimal> parse(JsonObject obj) {
+		return new RpcResponse<>(new Gson().fromJson(obj.get("result"), BigDecimal.class), 0);
 	}
 
 }

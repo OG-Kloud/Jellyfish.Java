@@ -22,8 +22,7 @@ public class CompositeSwapRequest implements IRpcRequest<String> {
 
 	@Override
 	public String getParameters() {
-		return "[" + this.options.getAsParameter() + "]";
-	}
+		return options != null? "[" + this.options.getAsParameter() + "]" : "[]";	}
 
 	@Override
 	public RpcResponse<String> parse(JsonObject obj) throws ApiError {

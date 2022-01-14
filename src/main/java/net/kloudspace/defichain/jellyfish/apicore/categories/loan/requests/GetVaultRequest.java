@@ -11,7 +11,7 @@ import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.VaultAct
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.VaultLiquidation;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.VaultState;
 
-public class GetVaultRequest<T> implements IRpcRequest<T> {
+public class GetVaultRequest implements IRpcRequest<Vault> {
 
 	private final String vaultID;
 
@@ -29,16 +29,15 @@ public class GetVaultRequest<T> implements IRpcRequest<T> {
 		return "[\"" + this.vaultID + "\"]";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) throws ApiError {
+	public RpcResponse<Vault> parse(JsonObject obj) throws ApiError {
 		JsonObject result = obj.get("result").getAsJsonObject();
 		if (result.get("state").getAsString().equals(VaultState.IN_LIQUIDATION.getState()))
-			return new RpcResponse<>((T) new Gson().fromJson(result, VaultLiquidation.class), 0);
+			return new RpcResponse<>(new Gson().fromJson(result, VaultLiquidation.class), 0);
 		else if (result.get("state").getAsString().equals(VaultState.ACTIVE.getState()))
-			return new RpcResponse<>((T) new Gson().fromJson(result, VaultActive.class), 0);
+			return new RpcResponse<>(new Gson().fromJson(result, VaultActive.class), 0);
 		else
-			return new RpcResponse<>((T) new Gson().fromJson(result, Vault.class), 0);
+			return new RpcResponse<>(new Gson().fromJson(result, Vault.class), 0);
 
 	}
 

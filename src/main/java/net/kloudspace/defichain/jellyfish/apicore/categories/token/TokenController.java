@@ -1,13 +1,10 @@
 package net.kloudspace.defichain.jellyfish.apicore.categories.token;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.kloudspace.defichain.jellyfish.RpcClient;
 import net.kloudspace.defichain.jellyfish.RpcClient.ApiError;
 import net.kloudspace.defichain.jellyfish.apicore.RpcResponse;
-import net.kloudspace.defichain.jellyfish.apicore.categories.token.model.Token;
 import net.kloudspace.defichain.jellyfish.apicore.categories.token.model.TokenResult;
 import net.kloudspace.defichain.jellyfish.apicore.categories.token.options.CreateTokenOptions;
 import net.kloudspace.defichain.jellyfish.apicore.categories.token.options.UpdateTokenOptions;
@@ -19,7 +16,6 @@ import net.kloudspace.defichain.jellyfish.apicore.categories.token.requests.Upda
 public class TokenController {
 
 	private RpcClient client;
-	private Map<Integer, Token> tokens = new HashMap<>();
 
 	public TokenController(RpcClient client) {
 		this.client = client;

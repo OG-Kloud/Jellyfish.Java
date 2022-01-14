@@ -19,23 +19,6 @@ public class LoanInfo {
 	private BigDecimal totalcollateralvalue;
 	private BigDecimal totalloanvalues;
 
-	public LoanInfo(int currentblock, int nextblock, String schemeid, BigDecimal maxdeviation, int minoracles, int defaultfixedinterval,
-			int totalschemes, int totalacceptedcollaterals, BigDecimal totalcollateral, int avalibleloantokens,  BigDecimal totalloans, int openvaults, int openauctions) {
-		this.currentpriceblock = currentblock;
-		this.nextpriceblock = nextblock;
-		this.defaultschemeid = schemeid;
-		this.defaultmaxpricedeviation = maxdeviation;
-		this.defaultminoraclesperprice = minoracles;
-		this.defaultfixedintervalblocks = defaultfixedinterval;
-		this.totalschemes = totalschemes;
-		this.totalacceptablecollateraltokens = totalacceptedcollaterals;
-		this.totalavalableloantokens = avalibleloantokens;
-		this.totalopenvaults = openvaults;
-		this.totalopenauctions = openauctions;
-		this.totalcollateralvalue = totalcollateral;
-		this.totalloanvalues = totalloans;
-	}
-
 	public int getCurrentpriceblock() {
 		return currentpriceblock;
 	}

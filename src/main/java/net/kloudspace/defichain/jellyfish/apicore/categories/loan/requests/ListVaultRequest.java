@@ -18,7 +18,7 @@ import net.kloudspace.defichain.jellyfish.apicore.categories.loan.model.VaultSta
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.options.ListVaultOptions;
 import net.kloudspace.defichain.jellyfish.apicore.categories.loan.options.VaultPagination;
 
-public class ListVaultRequest<T> implements IRpcRequest<T> {
+public class ListVaultRequest implements IRpcRequest<Vault[]> {
 	
 	private final ListVaultOptions options;
 	private final VaultPagination pageination;
@@ -39,9 +39,8 @@ public class ListVaultRequest<T> implements IRpcRequest<T> {
 		return "["+gson.toJson(this.options)+"," + (pageination != null ? gson.toJson(this.pageination) : "{}") +"]";
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public RpcResponse<T> parse(JsonObject obj) throws ApiError {
+	public RpcResponse<Vault[]> parse(JsonObject obj) throws ApiError {
 		JsonArray array = obj.get("result").getAsJsonArray();
 		Gson gson = new Gson();
 		List<Vault> data = new ArrayList<Vault>();
@@ -50,7 +49,7 @@ public class ListVaultRequest<T> implements IRpcRequest<T> {
 			if(ele.getAsJsonObject().get("state").getAsString().equals(VaultState.IN_LIQUIDATION.getState()))data.add(gson.fromJson(ele.getAsJsonObject(), VaultLiquidation.class));
 		});
 		
-		return new RpcResponse<>((T)data, 0);
+		return new RpcResponse<>(data.toArray(new Vault[data.size()]), 0);
 	}
 
 }

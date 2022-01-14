@@ -22,7 +22,7 @@ public class UpdateTokenRequest implements IRpcRequest<String> {
 
 	@Override
 	public String getParameters() {
-		return "["+this.options.getAsParameter()+"]";
+		return options != null ? "[" + this.options.getAsParameter() + "]" : "[]";
 	}
 
 	@Override
